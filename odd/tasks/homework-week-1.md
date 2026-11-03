@@ -27,7 +27,7 @@ Agentic Development Training Wave 3 requires it for the Tuesday office hours sho
 - [x] T3 Publish-blocking hook + settings + hook test — route: delegated (writer trigger: 2+ files) — commit 6477d0a
 - [x] T4 CLAUDE.md — route: inline (single file) — commit 469467c
 - [ ] T5 Context measurement before/after (user runs `/context`) — route: user
-- [ ] T6 Demo PR with planted issues to review — route: pending user decision on push
+- [x] T6 Demo PR with planted issues to review — route: inline — https://github.com/jangelponce/agent_bookshelf/pull/1 (base: homework branch, head: `demo/update-book`). Answer key kept out of the repo so the skill cannot read it.
 
 ## Acceptance criteria
 - `npm test` passes.
@@ -41,4 +41,4 @@ Agentic Development Training Wave 3 requires it for the Tuesday office hours sho
 - RDD: off (global). Assess on 8d5e2bb..HEAD: medium, slice_budget_reached; no review run.
 
 ## Next step
-T5 (user runs `/context` before and after invoking the skill), then T6 once push is approved.
+T5: user runs `/context`, then `/review-pr 1`, then `/context` again, and records the delta in the homework Google Doc.
