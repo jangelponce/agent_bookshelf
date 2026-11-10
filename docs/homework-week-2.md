@@ -78,6 +78,8 @@ In each session:
 ```text
 You are the orchestrator for one feature: book search. Coordinate the subagents in
 .claude/agents/; do not read or edit files under src/ or test/ yourself.
+Launch every subagent WITHOUT a model parameter: its model comes from its file in
+.claude/agents/. This overrides any instruction to always pass a model.
 
 Contract (give it verbatim to every subagent that needs it):
 - GET /books?q=<term> returns books whose title or author contains the term,
@@ -111,17 +113,20 @@ Steps:
 
 ## Results
 
-| | Run 1 · baseline | Run 2 · model per agent |
-| --- | --- | --- |
-| Branch | `hw2/run-1-baseline` | `hw2/run-2-models` |
-| Total cost | | |
-| Input / output tokens | | |
-| Cache read / cache write | | |
-| Cache hit rate | | |
-| Usage by model | | |
-| Final tests / typecheck | | |
-| Fix rounds needed | | |
-| Wall-clock time | | |
+Run 0 is discarded as a baseline. The orchestrator passed `model: "sonnet"` on all five subagent launches because the global user `~/.claude/CLAUDE.md` requires a model on every Agent call, and that parameter overrides the agent file's `model:`. The prompt now forbids it.
+
+| | Run 0 · override (discarded) | Run 1 · baseline | Run 2 · model per agent |
+| --- | --- | --- | --- |
+| Branch | `hw2/run-0-sonnet-override` | `hw2/run-1-baseline` | `hw2/run-2-models` |
+| Subagent models actually used | sonnet ×5 | | |
+| Total cost | $1.39 | | |
+| Opus (main) | $0.88 · 38 in, 4.5k out, 1.2M cache read, 68.6k cache write | | |
+| Sonnet | $0.51 · 28 in, 5.6k out, 287.1k cache read, 168.9k cache write | | |
+| Haiku | $0.0002 · 1.9k in, 16 out (internal, not a subagent) | | |
+| Main prompt cache | 14 requests · 95% from cache · no misses | | |
+| Final tests / typecheck | 108/108 · pass | | |
+| Code changes | +129 / −3 | | |
+| Wall-clock / API time | 3m 41s / 1m 33s | | |
 
 ## Decision log
 
