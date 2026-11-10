@@ -25,10 +25,10 @@ Deliver the week 2 homework: a multi-agent flow on a real task with subagents ch
 - Runner: `npm test` (Vitest). Enforced inside the flow: `test-writer` RED before specialists, `test-runner` GREEN at the end.
 
 ## Tasks
-- [ ] T1 Subagent files with baseline models — route: inline (four short config files, design settled in conversation)
-- [ ] T2 Homework doc: flow, orchestrator prompt, run steps, results table, decision log draft — route: inline
-- [ ] T3 Lever commit: per-agent models — route: inline (one line per agent)
-- [ ] T4 Run branches `hw2/run-1-baseline` and `hw2/run-2-models` — route: inline
+- [x] T1 Subagent files with baseline models — route: inline (four short config files, design settled in conversation) — commit b0db145
+- [x] T2 Homework doc: flow, orchestrator prompt, run steps, results table, decision log draft — route: inline — commit 352316b
+- [x] T3 Lever commit: per-agent models — route: inline (one line per agent) — commit 18544ba
+- [x] T4 Run branches `hw2/run-1-baseline` (at 352316b) and `hw2/run-2-models` (at 18544ba) — route: inline
 - [ ] T5 Run 1 + `/usage` — route: user
 - [ ] T6 Run 2 + `/usage` — route: user
 - [ ] T7 Fill results table and finish decision log — route: inline, after T5/T6
@@ -39,6 +39,9 @@ Deliver the week 2 homework: a multi-agent flow on a real task with subagents ch
 - Decision log explains the split and names what to cut next time.
 
 ## Progress
+- T1-T4: no source code changed, so no tests run on this branch; the runs verify with `npm test` and typecheck.
+- Not yet verified: that subagent frontmatter loads (check with `/agents` or `/tasks` during Run 1).
+- Hypotheses to check for "what I'd cut": fresh subagent context re-gathering may cost more than two ~20-line edits save; the global user CLAUDE.md loads into every subagent.
 
 ## Next step
-T1.
+T5: user runs Run 1 per `docs/homework-week-2.md`, then `/usage`.
