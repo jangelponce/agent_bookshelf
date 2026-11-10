@@ -30,7 +30,7 @@ Deliver the week 2 homework: a multi-agent flow on a real task with subagents ch
 - [x] T3 Lever commit: per-agent models — route: inline (one line per agent) — commit 18544ba
 - [x] T4 Run branches `hw2/run-1-baseline` (at 352316b) and `hw2/run-2-models` (at 18544ba) — route: inline
 - [x] T5a Run 0 (discarded): orchestrator passed `model: "sonnet"` to all 5 subagents (global model gate in user CLAUDE.md), so not a baseline. Branch renamed `hw2/run-0-sonnet-override` (10ca328, 108/108, typecheck pass). Prompt fixed to forbid a model parameter.
-- [ ] T5 Run 1 + `/usage` (rerun from 352316b with fixed prompt) — route: user
+- [x] T5 Run 1 + `/usage` (rerun from 352316b with fixed prompt) — route: user — branch `hw2/run-1-baseline` e5cf6a0, worktree `bookshelf-run-1b`, transcript shows no model param on all 5 launches, 109/109, typecheck pass, $1.92
 - [ ] T6 Run 2 + `/usage` — route: user
 - [ ] T7 Fill results table and finish decision log — route: inline, after T5/T6
 
@@ -47,4 +47,4 @@ Deliver the week 2 homework: a multi-agent flow on a real task with subagents ch
 - After each run, verify subagent models from the session transcript (Agent tool_use inputs), not only `/usage`.
 
 ## Next step
-T5: user reruns Run 1 in a new worktree with the fixed prompt, effort medium, then `/usage`.
+T6: user runs Run 2 from `hw2/run-2-models` in a new worktree, fixed prompt, effort medium, then `/usage`.

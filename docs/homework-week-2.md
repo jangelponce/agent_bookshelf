@@ -118,15 +118,15 @@ Run 0 is discarded as a baseline. The orchestrator passed `model: "sonnet"` on a
 | | Run 0 · override (discarded) | Run 1 · baseline | Run 2 · model per agent |
 | --- | --- | --- | --- |
 | Branch | `hw2/run-0-sonnet-override` | `hw2/run-1-baseline` | `hw2/run-2-models` |
-| Subagent models actually used | sonnet ×5 | | |
-| Total cost | $1.39 | | |
-| Opus (main) | $0.88 · 38 in, 4.5k out, 1.2M cache read, 68.6k cache write | | |
-| Sonnet | $0.51 · 28 in, 5.6k out, 287.1k cache read, 168.9k cache write | | |
-| Haiku | $0.0002 · 1.9k in, 16 out (internal, not a subagent) | | |
-| Main prompt cache | 14 requests · 95% from cache · no misses | | |
-| Final tests / typecheck | 108/108 · pass | | |
-| Code changes | +129 / −3 | | |
-| Wall-clock / API time | 3m 41s / 1m 33s | | |
+| Subagent models actually used | sonnet ×5 | opus ×5 (inherit) | |
+| Total cost | $1.39 | $1.92 | |
+| Opus | $0.88 · 38 in, 4.5k out, 1.2M cache read, 68.6k cache write | $1.92 · 68 in, 10.5k out, 1.5M cache read, 240.9k cache write (main + subagents) | |
+| Sonnet | $0.51 · 28 in, 5.6k out, 287.1k cache read, 168.9k cache write | — | |
+| Haiku | $0.0002 · 1.9k in, 16 out (internal, not a subagent) | $0.0002 · 1.9k in, 16 out (internal) | |
+| Main prompt cache | 14 requests · 95% from cache · no misses | 13 requests · 94% from cache · no misses | |
+| Final tests / typecheck | 108/108 · pass | 109/109 · pass | |
+| Code changes | +129 / −3 | +149 / −3 | |
+| Wall-clock / API time | 3m 41s / 1m 33s | 4m 0s / 1m 43s | |
 
 ## Decision log
 
