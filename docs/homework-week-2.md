@@ -118,18 +118,28 @@ Run 0 is discarded as a baseline. The orchestrator passed `model: "sonnet"` on a
 | | Run 0 · override (discarded) | Run 1 · baseline | Run 2 · model per agent |
 | --- | --- | --- | --- |
 | Branch | `hw2/run-0-sonnet-override` | `hw2/run-1-baseline` | `hw2/run-2-models` |
-| Subagent models actually used | sonnet ×5 | opus ×5 (inherit) | |
-| Total cost | $1.39 | $1.92 | |
-| Opus | $0.88 · 38 in, 4.5k out, 1.2M cache read, 68.6k cache write | $1.92 · 68 in, 10.5k out, 1.5M cache read, 240.9k cache write (main + subagents) | |
-| Sonnet | $0.51 · 28 in, 5.6k out, 287.1k cache read, 168.9k cache write | — | |
-| Haiku | $0.0002 · 1.9k in, 16 out (internal, not a subagent) | $0.0002 · 1.9k in, 16 out (internal) | |
-| Main prompt cache | 14 requests · 95% from cache · no misses | 13 requests · 94% from cache · no misses | |
-| Final tests / typecheck | 108/108 · pass | 109/109 · pass | |
-| Code changes | +129 / −3 | +149 / −3 | |
-| Wall-clock / API time | 3m 41s / 1m 33s | 4m 0s / 1m 43s | |
+| Subagent models actually used | sonnet ×5 | opus ×5 (inherit) | sonnet ×3, haiku ×2 |
+| Total cost | $1.39 | $1.92 | **$1.18** |
+| Opus | $0.88 · 38 in, 4.5k out, 1.2M cache read, 68.6k cache write | $1.92 · 68 in, 10.5k out, 1.5M cache read, 240.9k cache write (main + subagents) | $0.84 · 36 in, 4.0k out, 1.1M cache read, 66.7k cache write |
+| Sonnet | $0.51 · 28 in, 5.6k out, 287.1k cache read, 168.9k cache write | — | $0.33 · 20 in, 4.8k out, 225.4k cache read, 105.8k cache write |
+| Haiku | $0.0002 · 1.9k in, 16 out (internal, not a subagent) | $0.0002 · 1.9k in, 16 out (internal) | $0.01 · 1.9k in, 1.8k out, 92.4k cache read, 64.4k cache write |
+| Subagents (all five) | $0.51 | ≈ $1.07 ¹ | $0.35 |
+| Orchestrator (main, Opus) | $0.88 | ≈ $0.85 ¹ | $0.84 |
+| Main prompt cache | 14 requests · 95% from cache · no misses | 13 requests · 94% from cache · no misses | 13 requests · 94% from cache · no misses |
+| Subagent launches / fix rounds | 5 / 0 | 5 / 0 | 5 / 0 |
+| Final tests / typecheck | 108/108 · pass | 109/109 · pass | 108/108 · pass |
+| Code changes | +129 / −3 | +149 / −3 | +131 / −3 |
+| Wall-clock / API time | 3m 41s / 1m 33s | 4m 0s / 1m 43s | 4m 47s / 1m 27s |
+
+¹ `/usage` reports Run 1 as one Opus line. The subagent share is summed from the five subagent transcripts (6.8k output, 171.8k cache write, 356.5k cache read) at Opus list prices with the 5-minute cache; the orchestrator is the remainder.
+
+### What changed between Run 1 and Run 2
+
+- Total: $1.92 → $1.18, −$0.74 (−39%), same outcome: five launches, no fix round, tests and typecheck green.
+- Subagents: ≈ $1.07 → $0.35 (−67%). The orchestrator did not change (≈ $0.85 → $0.84) and is now 71% of the run.
+- Each subagent starts by writing 28k–37k tokens to cache and then produces only 0.3k–2.9k tokens of output. The starting context, not the work, is most of a subagent's bill.
+- Single runs, so no variance yet: the test writer produced 109 tests in Run 1 and 108 in Run 2. Wall-clock includes the time spent pasting the prompt; API time is the fairer speed number.
 
 ## Decision log
 
-Why this split: the feature touches three groups of files (tests, repository, route plus validation), so each specialist owns one group and the two implementers run in parallel without worktrees. Tests come first so the contract is executable before any code exists, and the test runner is a separate agent because test output is verbose and only the failures need to reach the orchestrator. The only barrier is the final go/no-go; everything before it is a pipeline.
-
-What I'd cut next time: _fill in after both runs._
+I split book search by file ownership: `test-writer` owns `test/`, `repo-specialist` owns `repository.ts` and `route-specialist` owns `routes.ts` and `validation.ts`. That lets the two implementers run in parallel without worktrees, and a separate `test-runner` keeps verbose test output away from the orchestrator. Tests go first so the contract is executable before any code exists, and the only barrier is the final go/no-go. Moving the specialists to Sonnet and the runner to Haiku cut the run from $1.92 to $1.18 with the same result. The transcripts show where the rest goes: every subagent pays 28k–37k tokens of cache writes just to start, against at most 2.9k tokens of output, and the Opus orchestrator is now 71% of the bill. Next time I'd merge the two implementers into one agent, since each wrote 7–11 lines of code and that doesn't pay for a second fresh context. I'd also trim the ~18k-token global `~/.claude/CLAUDE.md` that `/usage` flags on every request, whose "always pass a model" rule silently overrode the agent files in Run 0. The next lever to measure is the orchestrator itself on Sonnet.

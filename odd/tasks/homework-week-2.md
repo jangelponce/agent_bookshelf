@@ -31,8 +31,8 @@ Deliver the week 2 homework: a multi-agent flow on a real task with subagents ch
 - [x] T4 Run branches `hw2/run-1-baseline` (at 352316b) and `hw2/run-2-models` (at 18544ba) — route: inline
 - [x] T5a Run 0 (discarded): orchestrator passed `model: "sonnet"` to all 5 subagents (global model gate in user CLAUDE.md), so not a baseline. Branch renamed `hw2/run-0-sonnet-override` (10ca328, 108/108, typecheck pass). Prompt fixed to forbid a model parameter.
 - [x] T5 Run 1 + `/usage` (rerun from 352316b with fixed prompt) — route: user — branch `hw2/run-1-baseline` e5cf6a0, worktree `bookshelf-run-1b`, transcript shows no model param on all 5 launches, 109/109, typecheck pass, $1.92
-- [ ] T6 Run 2 + `/usage` — route: user
-- [ ] T7 Fill results table and finish decision log — route: inline, after T5/T6
+- [x] T6 Run 2 + `/usage` — route: user — branch `hw2/run-2-models` 283b683, worktree `bookshelf-run-2`, transcripts: sonnet ×3, haiku ×2, 108/108, typecheck pass, $1.18
+- [x] T7 Fill results table and finish decision log — route: inline
 
 ## Acceptance criteria
 - Both run branches end with `npm test` and `npm run typecheck` green and a `feat:` commit for search.
@@ -41,10 +41,10 @@ Deliver the week 2 homework: a multi-agent flow on a real task with subagents ch
 
 ## Progress
 - T1-T4: no source code changed, so no tests run on this branch; the runs verify with `npm test` and typecheck.
-- Not yet verified: that subagent frontmatter loads (check with `/agents` or `/tasks` during Run 1).
+- Frontmatter models verified from subagent transcripts in Runs 1 and 2.
 - Hypotheses to check for "what I'd cut": fresh subagent context re-gathering may cost more than two ~20-line edits save; the global user CLAUDE.md loads into every subagent.
 
 - After each run, verify subagent models from the session transcript (Agent tool_use inputs), not only `/usage`.
 
 ## Next step
-T6: user runs Run 2 from `hw2/run-2-models` in a new worktree, fixed prompt, effort medium, then `/usage`.
+Homework complete. Present at OH2. Keep run branches `hw2/run-1-baseline` and `hw2/run-2-models` for the week 3 re-run.
