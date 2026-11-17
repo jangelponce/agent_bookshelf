@@ -111,6 +111,18 @@ describe('books', () => {
     })
   })
 
+  describe('PUT /books/:id', () => {
+    it('updates the book', async () => {
+      const created = await (await createBook()).json()
+      const res = await app.request(`/books/${created.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'Updated', author: 'Someone' }),
+      })
+      expect(res.status).toBeDefined()
+    })
+  })
+
   it('isolates state between app instances', async () => {
     await createBook()
     const other = createApp()

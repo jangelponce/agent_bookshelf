@@ -4,6 +4,7 @@ export type BookRepository = {
   list(): Book[]
   get(id: string): Book | undefined
   create(input: NewBook): Book
+  update(id: string, input: NewBook): Book
   delete(id: string): boolean
 }
 
@@ -16,6 +17,11 @@ export function createInMemoryBookRepository(): BookRepository {
     create: (input) => {
       const book: Book = { id: crypto.randomUUID(), ...input }
       books.set(book.id, book)
+      return book
+    },
+    update: (id, input) => {
+      const book: Book = { id, ...input }
+      books.set(id, book)
       return book
     },
     delete: (id) => books.delete(id),
