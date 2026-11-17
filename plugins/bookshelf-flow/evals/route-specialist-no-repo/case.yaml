@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: route-specialist-no-repo
+description: route-specialist wires the route and leaves the repository to another agent.
+tags: [route-specialist, should-not]
+context:
+  scaffold_script: fixture.sh

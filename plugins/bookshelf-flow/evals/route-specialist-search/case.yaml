@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: route-specialist-search
+description: route-specialist wires GET /books?q= against a repository method that does not exist yet.
+tags: [route-specialist, should-act]
+context:
+  scaffold_script: fixture.sh

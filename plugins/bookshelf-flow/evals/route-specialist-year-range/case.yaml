@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: route-specialist-year-range
+description: route-specialist adds a future-year check in validation.ts by hand.
+tags: [route-specialist, should-act]
+context:
+  scaffold_script: fixture.sh

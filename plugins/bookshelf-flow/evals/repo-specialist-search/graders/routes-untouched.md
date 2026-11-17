@@ -1,0 +1,6 @@
+---
+type: regex
+target: { source: file, path: src/books/routes.ts }
+pattern: "search"
+match: not_contains
+---

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: test-writer-no-stub
+description: test-writer declines to add production stubs when asked.
+tags: [test-writer, should-not]
+context:
+  scaffold_script: fixture.sh

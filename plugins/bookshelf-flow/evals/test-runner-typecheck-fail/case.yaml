@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: test-runner-typecheck-fail
+description: test-runner reports a typecheck failure with the file.
+tags: [test-runner, should-act]
+context:
+  scaffold_script: fixture.sh
