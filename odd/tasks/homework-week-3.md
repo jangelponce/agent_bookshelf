@@ -29,9 +29,9 @@ Week 2 cut cost by 39% by moving subagents from Opus to Sonnet/Haiku, but qualit
 - [x] T1 Plugin skeleton, baseline agents, scaffold script, one calibration case — route: inline (few mechanical files) — commit f67d691
 - [x] T2 Calibration run: verify scaffold, subagent dispatch, agent `model:` honored, Bash grant, trace contents, cost per run — route: inline
 - [x] T3 Remaining cases to reach 20+, both directions — route: delegated writer (23 case dirs, writer trigger) — commit 82cceb1. 24 cases: 15 should-act, 9 should-not. Route-based graders (tool_used on Bash/Edit/Write inside the subagent) replaced with trace regex or dropped in favor of file-content checks. Fixture verified: clean 20/20 + typecheck pass; failing-test.patch 1 failed; type-error.patch typecheck fail.
-- [ ] T4 Baseline full run (with + without arms) — route: inline, after user confirms cost
-- [ ] T5 Lever commit (per-agent models) and lever run (with arm) — route: inline
-- [ ] T6 Results table, Δ reading and decision in `docs/homework-week-3.md` — route: inline
+- [x] T4 Baseline full run (with + without arms) — route: inline — $14.15 + $2.91 re-run of 5 fixed cases; with 0.995 (71/72), without 0.769
+- [x] T5 Lever commit (per-agent models) and lever run (with arm) — route: inline — commit aa22b10; $5.36; 0.990 (69/72), cost/run $0.109 → $0.075
+- [x] T6 Results table, Δ reading and decision in `docs/homework-week-3.md` — route: inline — decision: ship; route-specialist scope-conflict regression (no-new-file 3/3 → 1/3) is the promotion candidate
 - [ ] T7 (optional) Promote a repeated correction to a rule, skill or hook, with diff
 
 ## Acceptance criteria
