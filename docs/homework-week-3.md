@@ -85,6 +85,25 @@ One case shows a pattern worth acting on before calling it done. In `route-speci
 
 The other failure, `repo-specialist-no-deps`, failed once in each config (1/3 in both): the agent stopped and asked instead of using native `filter`. That is not a regression.
 
+## Promotion (optional, not verified)
+
+The `no-new-file` failure traces back to a rule that over-generalized: "call the repository method exactly as the brief names it, even if it does not exist yet" became, on Sonnet, "import a file that does not exist yet". The fix is promoted to the agent itself, since it is a contract every run must follow:
+
+```diff
+ - Relative imports end in `.js`.
++- Only repository methods may be missing. If the brief asks for a new file, you cannot create it: put the code in `routes.ts` or `validation.ts`, import only files that already exist, and say where it went.
+```
+
+It is not verified. The re-run of the six `route-specialist-*` cases hit the account's spend limit and produced no graded runs. To check it, from `plugins/bookshelf-flow/`:
+
+```bash
+claude plugin eval . --case 'route-specialist-*' --ablation none --trust-plugin --scaffold -j 4 --runs 3 \
+  --model claude-sonnet-5-5 --judge-model claude-haiku-5-5 --no-publish \
+  --allow-tools Write Edit "Bash(npm test*)" "Bash(npm run typecheck*)"
+```
+
+Expected: `route-specialist-no-new-file` goes from 0.83 to 1.00 and the other five stay at 1.00.
+
 ## Cost of the homework
 
 About $23 in total: calibration ≈ $0.60, baseline $14.15 plus $2.91 for the five fixed cases, and the lever run $5.36.

@@ -11,5 +11,6 @@ Edit only `src/<feature>/routes.ts` and `src/<feature>/validation.ts` for the fe
 - Validate by hand in `validation.ts`, returning the same `{ ok, value } | { ok, error }` shape the file already uses. No zod or other dependency.
 - Every error response is `{ "error": "<message>" }` with status 400 for invalid input and 404 for a missing resource.
 - Relative imports end in `.js`.
+- Only repository methods may be missing. If the brief asks for a new file, you cannot create it: put the code in `routes.ts` or `validation.ts`, import only files that already exist, and say where it went.
 
 Return, under 100 words: the route behavior per input case, the validation function signature, and the files touched. No transcript.
