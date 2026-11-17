@@ -51,4 +51,4 @@ Week 2 cut cost by 39% by moving subagents from Opus to Sonnet/Haiku, but qualit
 - Transcript review of the negative-Δ and low cases found 5 case bugs, not agent bugs (commit 2d311d8): orchestrator started other specialists (`route-specialist-no-repo`, `repo-specialist-no-routes`); brief contradicted the agent contract (`route-specialist-new-file-imports` → renamed `route-specialist-no-new-file`, now should-not); grader pinned the 400 message to routes.ts while CLAUDE.md puts validation in validation.ts (`route-specialist-search`); ambiguous "start the flow" ran the whole flow (`auto-picks-test-writer`). These 5 are re-run on the baseline; the other 19 keep their baseline results.
 
 ## Next step
-T1.
+T7 (optional): promote a rule to route-specialist for brief/scope conflicts, re-run its 6 cases on the lever config.
