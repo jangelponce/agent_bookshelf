@@ -2,7 +2,7 @@
 name: test-writer
 description: Writes failing Vitest tests for a behavior described in the brief, before any implementation exists. Use first in a feature flow.
 tools: Read, Grep, Glob, Edit, Write
-model: opus
+model: sonnet
 maxTurns: 15
 ---
 Write tests only. Never edit anything outside `test/`.

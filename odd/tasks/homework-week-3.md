@@ -26,9 +26,9 @@ Week 2 cut cost by 39% by moving subagents from Opus to Sonnet/Haiku, but qualit
 - This feature adds no production code; the eval cases are the tests. RED/GREEN applies to graders: a grader is checked against a known-bad outcome (without arm or a deliberately wrong run) before it is trusted.
 
 ## Tasks
-- [ ] T1 Plugin skeleton, baseline agents, scaffold script, one calibration case — route: inline (few mechanical files)
-- [ ] T2 Calibration run: verify scaffold, subagent dispatch, agent `model:` honored, Bash grant, trace contents, cost per run — route: inline
-- [ ] T3 Remaining cases to reach 20+, both directions — route: TBD after T2
+- [x] T1 Plugin skeleton, baseline agents, scaffold script, one calibration case — route: inline (few mechanical files) — commit f67d691
+- [x] T2 Calibration run: verify scaffold, subagent dispatch, agent `model:` honored, Bash grant, trace contents, cost per run — route: inline
+- [x] T3 Remaining cases to reach 20+, both directions — route: delegated writer (23 case dirs, writer trigger) — commit 82cceb1. 24 cases: 15 should-act, 9 should-not. Route-based graders (tool_used on Bash/Edit/Write inside the subagent) replaced with trace regex or dropped in favor of file-content checks. Fixture verified: clean 20/20 + typecheck pass; failing-test.patch 1 failed; type-error.patch typecheck fail.
 - [ ] T4 Baseline full run (with + without arms) — route: inline, after user confirms cost
 - [ ] T5 Lever commit (per-agent models) and lever run (with arm) — route: inline
 - [ ] T6 Results table, Δ reading and decision in `docs/homework-week-3.md` — route: inline
@@ -40,6 +40,15 @@ Week 2 cut cost by 39% by moving subagents from Opus to Sonnet/Haiku, but qualit
 - Decision states ship or keep, and notes interval width at this sample size.
 
 ## Progress
+- Calibration (test-writer-search, 1 run per arm, main `claude-sonnet-5-5`, judge `claude-haiku-5-5`): both arms 1.0, Δ 0; with $0.133 (24 s), without $0.088 (23 s).
+- Verified in the trace: the subagent ran on `claude-opus-5-5` (frontmatter `model:` is honored), the main session on Sonnet, no `model` parameter on the Agent call. The trace's result line has `modelUsage` with cost per model.
+- `scaffold_script` must live inside the case dir (no `..`), so each case has a 2-line `fixture.sh` wrapper calling `_shared/fixture.sh`.
+- Blocker: granting `Bash` fails because `~/.ssh` contains a symlink the eval sandbox cannot exclude. Affects only test-runner cases. Needs the user's decision.
+- Receipt-driven review: off (global), no review ceremony.
+- `~/.ssh` blocker resolved by the user (removed the alias symlink). Bash-granted runs then failed on `vitest: command not found`: the eval sandbox cannot follow a `node_modules` symlink out of the workspace, so the fixture now clones `node_modules` (`cp -Rc`, ~2 s) — commit baa2eb5.
+- Rigid grader found on the first test-runner run: the orchestrator paraphrased the agent's `tests: 20/20` line, so test-runner prompts now ask to relay the report verbatim.
+- Baseline full run (agents on Opus, 24 cases × 3 runs × 2 arms, -j 4): $14.15, 0 errors. With 0.889 mean score / without 0.794, Δ +0.094.
+- Transcript review of the negative-Δ and low cases found 5 case bugs, not agent bugs (commit 2d311d8): orchestrator started other specialists (`route-specialist-no-repo`, `repo-specialist-no-routes`); brief contradicted the agent contract (`route-specialist-new-file-imports` → renamed `route-specialist-no-new-file`, now should-not); grader pinned the 400 message to routes.ts while CLAUDE.md puts validation in validation.ts (`route-specialist-search`); ambiguous "start the flow" ran the whole flow (`auto-picks-test-writer`). These 5 are re-run on the baseline; the other 19 keep their baseline results.
 
 ## Next step
 T1.

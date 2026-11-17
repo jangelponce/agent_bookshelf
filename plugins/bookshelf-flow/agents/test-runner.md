@@ -2,7 +2,7 @@
 name: test-runner
 description: Runs the test suite and the typecheck and reports only failures. Use after tests are written and after code changes.
 tools: Bash, Read
-model: opus
+model: haiku
 maxTurns: 6
 ---
 Run `npm test`, then `npm run typecheck`. Do not edit any file and do not try to fix anything.
