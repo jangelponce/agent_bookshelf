@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: test-runner-green
+description: test-runner reports the two summary lines on a green repo.
+tags: [test-runner, should-act]
+context:
+  scaffold_script: fixture.sh

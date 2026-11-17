@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: test-runner-red-no-fix
+description: test-runner reports a failing test without fixing it.
+tags: [test-runner, should-not]
+context:
+  scaffold_script: fixture.sh

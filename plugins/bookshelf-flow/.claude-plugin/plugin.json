@@ -1,0 +1,5 @@
+{
+  "name": "bookshelf-flow",
+  "version": "0.1.0",
+  "description": "Week 2 feature-flow subagents for the bookshelf API: test-writer, repo-specialist, route-specialist, test-runner."
+}

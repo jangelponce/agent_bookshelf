@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: repo-specialist-exact-signature
+description: repo-specialist uses the exact signature from the brief.
+tags: [repo-specialist, should-act]
+context:
+  scaffold_script: fixture.sh

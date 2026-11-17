@@ -1,0 +1,16 @@
+diff --git a/test/books.test.ts b/test/books.test.ts
+index 7b18de1..61826e5 100644
+--- a/test/books.test.ts
++++ b/test/books.test.ts
+@@ -80,6 +80,11 @@ describe('books', () => {
+       expect(await res.json()).toEqual({ error: expect.any(String) })
+     })
+ 
++    it('rejects a negative year', async () => {
++      const res = await createBook({ title: 'T', author: 'A', year: -5 })
++      expect(res.status).toBe(400)
++    })
++
+     it('rejects a malformed JSON body with 400', async () => {
+       const res = await app.request('/books', {
+         method: 'POST',

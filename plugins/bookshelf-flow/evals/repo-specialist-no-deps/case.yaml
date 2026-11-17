@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: repo-specialist-no-deps
+description: repo-specialist implements the method without adding lodash.
+tags: [repo-specialist, should-not]
+context:
+  scaffold_script: fixture.sh

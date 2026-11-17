@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: route-specialist-no-new-file
+description: "route-specialist stays inside routes.ts and validation.ts when the brief asks for a new file, and says so."
+tags: [route-specialist, should-not]
+context:
+  scaffold_script: fixture.sh

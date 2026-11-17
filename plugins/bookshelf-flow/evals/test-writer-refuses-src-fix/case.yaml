@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: test-writer-refuses-src-fix
+description: test-writer writes the requested tests and does not touch validation.ts.
+tags: [test-writer, should-not]
+context:
+  scaffold_script: fixture.sh

@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: test-writer-style
+description: test-writer follows the existing test style for an author filter.
+tags: [test-writer, should-act]
+context:
+  scaffold_script: fixture.sh

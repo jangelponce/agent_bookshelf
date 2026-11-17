@@ -1,0 +1,13 @@
+diff --git a/src/books/repository.ts b/src/books/repository.ts
+index 3c308db..0828a0e 100644
+--- a/src/books/repository.ts
++++ b/src/books/repository.ts
+@@ -12,7 +12,7 @@ export function createInMemoryBookRepository(): BookRepository {
+ 
+   return {
+     list: () => [...books.values()],
+-    get: (id) => books.get(id),
++    get: (id) => books.get(Number(id)),
+     create: (input) => {
+       const book: Book = { id: crypto.randomUUID(), ...input }
+       books.set(book.id, book)
