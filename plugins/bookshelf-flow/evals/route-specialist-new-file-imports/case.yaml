@@ -1,6 +1,0 @@
-schema_version: "1.1"
-name: route-specialist-new-file-imports
-description: route-specialist adds a new module and imports it with a .js extension.
-tags: [route-specialist, should-act]
-context:
-  scaffold_script: fixture.sh
