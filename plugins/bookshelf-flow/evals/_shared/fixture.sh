@@ -7,9 +7,9 @@ shared="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 root="$(cd "$shared/../../../.." && pwd)"
 
 cp -R "$root/src" "$root/test" ./
-cp "$root/package.json" "$root/package-lock.json" "$root/tsconfig.json" "$root/CLAUDE.md" ./
+cp "$root/package.json" "$root/package-lock.json" "$root/tsconfig.json" "$root/CLAUDE.md" "$root/.gitignore" ./
 rm -rf test/hooks
-ln -s "$root/node_modules" node_modules
+cp -Rc "$root/node_modules" node_modules 2>/dev/null || cp -R "$root/node_modules" node_modules
 
 git init -q
 git add -A
